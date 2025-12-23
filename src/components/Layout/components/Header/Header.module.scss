@@ -1,0 +1,84 @@
+.wrapper{
+    --search-border-radius: 92px;
+    --search-height: 46px;
+    --search-top-spacer: 9px;
+    --search-button-width: 52px;
+
+    height: var(--default-layout-header-height, 60px);
+    box-shadow: 0px 1px 1px rgb(0 0 0 /12%) ;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    // position: fixed;
+}
+.inner{
+    height: 100%;
+    width: var(--default-layout-width);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo{
+    display: flex;    
+}
+.search{
+    background-color: #f2f2f2;
+    width: 361px;
+    height: var(--search-height);
+    border-radius:var(--search-border-radius);
+    padding-left: 16px;    
+    display: flex;
+    border: 1.5px solid transparent;
+    position: relative;
+
+    input{
+        flex: 1;
+        color: var(--black);
+        font-size: 1.6rem;
+        border: none;
+        background-color: transparent;
+        height: 100%;
+        caret-color: red;
+    }
+    &:focus-within{
+        border-color: rgba(22, 24, 35, 0.2)
+    }
+    input:not(:placeholder-shown) ~ .search-btn {
+        color: rgba(22, 24, 35, 0.75)
+    }
+}
+
+.clear,
+.loading{
+    position: absolute;
+    right: calc(var(--search-button-width) + 16px);
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(22,24,35,0.34);
+}
+.search-btn{
+    width: var(--search-button-width);
+    height: 100%;
+    border-top-right-radius:var(--search-border-radius) ;
+    border-bottom-right-radius:var(--search-border-radius) ;
+    font-size: 2rem;
+    color: rgba(22,24,35,0.34);
+    position: relative;
+
+    &:hover{
+        cursor: pointer;
+        background-color: rgba(22,24,35,0.03);
+    }
+    &::before{
+        content:'' ;
+        border-left: 1px solid rgba(22, 24, 35, 0.12);
+        position: absolute;
+        top: var(--search-top-spacer);
+        left: -1px;
+        height: calc(var(--search-height) - var(--search-top-spacer) * 2 );
+
+    }
+    &:active{
+        background-color: rgba(22, 24, 35, 0.06);
+    }
+}
