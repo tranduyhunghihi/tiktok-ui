@@ -1,5 +1,4 @@
 @import 'normalize.css';
-@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;600;700;800&display=swap');
 
 
 :root{
@@ -26,7 +25,7 @@ html{
 }
 
 body{
-    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-family: "ProximaNova", sans-serif;
     font-size: 1.6rem;
     line-height: 1.5;
     text-rendering: optimizeSpeed;
@@ -42,6 +41,27 @@ button, input ,[tabindex]{
 a[href] {
     color: var(--text-color);
     text-decoration: none;
+}
+//fonts embedded
+@font-face {
+    font-family: ProximaNova;
+    src: url('/asset/fonts/TikTokFont-Regular.woff2');
+    font-weight: 400;
+}
+@font-face {
+    font-family: ProximaNova;
+    src: url('/asset/fonts/TikTokFont-Semibold.woff2');
+    font-weight: 600;
+}
+@font-face {
+    font-family: ProximaNova;
+    src: url('/asset/fonts/TikTokFont-Bold.woff2');
+    font-weight: 700;
+}
+@font-face {
+    font-family: SofiaPro;
+    src: url('/asset/fonts/TikTokDisplayFont-Bold.woff2');
+    font-weight: 700;
 }
 
 //custom tippy tooltip

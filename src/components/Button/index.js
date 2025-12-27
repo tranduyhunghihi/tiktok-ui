@@ -1,11 +1,11 @@
-import { faL } from '@fortawesome/free-solid-svg-icons'
-import styles from './Button.module.scss'
-import classNames from 'classnames/bind'
-import { Link } from 'react-router-dom'
+import { faL } from '@fortawesome/free-solid-svg-icons';
+import styles from './Button.module.scss';
+import classNames from 'classnames/bind';
+import { Link } from 'react-router-dom';
 
-const cx = classNames.bind(styles)
+const cx = classNames.bind(styles);
 
-function Button({ 
+function Button({
     to,
     href,
     primary = false,
@@ -14,35 +14,34 @@ function Button({
     small = false,
     large = false,
     rounded = false,
-    children ,
-    disabled,   
+    children,
+    disabled,
     className,
     leftIcon,
     rightIcon,
-    onClick ,
+    onClick,
     ...passProps
-        }) {
-
-    let Comp = 'button'
+}) {
+    let Comp = 'button';
     const props = {
         onClick,
-        ...passProps
-    }
-    if(disabled){
-        Object.keys(props).forEach(key => {
-            if(key.startsWith('on') && typeof(key) ==='function' ){
+        ...passProps,
+    };
+    if (disabled) {
+        Object.keys(props).forEach((key) => {
+            if (key.startsWith('on') && typeof key === 'function') {
                 delete props[key];
             }
-        })
+        });
     }
-    if(to){
+    if (to) {
         props.to = to;
-        Comp = Link
-    }else if(href){
+        Comp = Link;
+    } else if (href) {
         props.href = href;
-        Comp = 'a'
+        Comp = 'a';
     }
-    const classes = cx('wrapper' ,{
+    const classes = cx('wrapper', {
         primary,
         outline,
         small,
@@ -50,17 +49,15 @@ function Button({
         text,
         [className]: className,
         disabled,
-        rounded
-    })
-    return (  
-        <Comp className={classes} {...props} >
+        rounded,
+    });
+    return (
+        <Comp className={classes} {...props}>
             {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
             <span className={cx('title')}>{children}</span>
             {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
-
         </Comp>
-
-    )
+    );
 }
 
 export default Button;

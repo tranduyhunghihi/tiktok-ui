@@ -1,5 +1,6 @@
-const image = {
-    logo: require('./logo.svg')
-}
+const images = {
+    logo: require('./logo.svg').default,
+    noImage: require('./imageonline-co-placeholder-image.png'),
+};
 
-export default image
+export default images;

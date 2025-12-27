@@ -7,11 +7,11 @@ import Search from "~/pages/Search";
 
 
 const publicRoutes = [
+    { path: '/profile/:nickname', component: Profile},
     { path: '/', component: Home},
-    { path: '/following', component: Following},
-    { path: '/profile', component: Profile},
-    { path: '/upload', component: Upload, layout: HeaderOnly},
-    { path: '/search', component: Search, layout: null},
+    { path: 'following', component: Following},
+    { path: 'upload', component: Upload, layout: HeaderOnly},
+    { path: 'search', component: Search, layout: null},
 ]
 
 const privateRoutes = []
