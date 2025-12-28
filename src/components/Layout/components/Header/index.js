@@ -9,7 +9,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faCircleQuestion, faKeyboard, faUser } from '@fortawesome/free-regular-svg-icons';
 import Tippy from '@tippyjs/react';
+import {Link} from 'react-router-dom'
 import 'tippy.js/dist/tippy.css';
+
+import routesConfig from '~/config/routes'
 import Button from '~/components/Button';
 import styles from './Header.module.scss';
 import image from '~/asset/image';
@@ -42,6 +45,7 @@ const MENU_ITEMS = [
                     code: 'cn',
                     title: 'China',
                 },
+                
             ],
         },
     },
@@ -100,7 +104,9 @@ function Header() {
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
                 <div className={cx('logo')}>
-                    <img src={image.logo} alt="Tiktok" />
+                    <Link to={routesConfig.home} className={cx('logo-link')}> 
+                        <img src={image.logo} alt="Tiktok" />
+                    </Link>
                 </div>
                 
 
@@ -131,7 +137,7 @@ function Header() {
                             <Button primary>Log in</Button>
                         </>
                     )}
-                    <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
+                    <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange} >
                         {currentUser ? (
                             <Image
                                 className={cx('user-avatar')}

@@ -16,44 +16,50 @@ const cx = classNames.bind(styles);
 function Search() {
     const [searchValue, setSearchValue] = useState('');
     const [searchResult, setSearchResult] = useState([]);
-    const [showResult, setShowResult] = useState(true)
-    const [loading, setLoading] = useState(false)
+    const [showResult, setShowResult] = useState(true);
+    const [loading, setLoading] = useState(false);
 
-    const debounced = useDebounce(searchValue, 700)
+    const debounced = useDebounce(searchValue, 700);
 
-
-    const searchRef = useRef()
+    const searchRef = useRef();
 
     useEffect(() => {
-
-        if(!debounced.trim()) {
-            setSearchResult([])
-            return ;
+        if (!debounced.trim()) {
+            setSearchResult([]);
+            return;
         }
 
-        
-        const fetchApi = async() => {
-            setLoading(true)
+        const fetchApi = async () => {
+            setLoading(true);
             const result = await searchService.search(debounced);
-            setSearchResult(result)
+            setSearchResult(result);
 
-            setLoading(false)
+            setLoading(false);
+        };
 
-        }
-
-        fetchApi()
-        
+        fetchApi();
     }, [debounced]);
 
     const handleClear = () => {
-        setSearchValue('')
-        searchRef.current.focus()
-        setShowResult(false)
-    }
+        setSearchValue('');
+        searchRef.current.focus();
+        setShowResult(false);
+    };
 
     const handleHideResult = () => {
-        setShowResult(false)
+        setShowResult(false);
+    };
+
+    const handleChange = (e) => {
+        const searchValue = e.target.value
+        if(!searchValue.startsWith(' ') || searchValue.trim()) {
+            setSearchValue(e.target.value)
+            
+        }
+        
     }
+
+   
 
     return (
         <HeadlessTippy
@@ -65,10 +71,8 @@ function Search() {
                     <PopperWrapper>
                         <h4 className={cx('search-title')}>Accounts</h4>
                         {searchResult.map((result) => (
-                            <AccountItem key={result.id} data={result}/>
-
+                            <AccountItem key={result.id} data={result} />
                         ))}
-                        
                     </PopperWrapper>
                 </div>
             )}
@@ -80,16 +84,16 @@ function Search() {
                     value={searchValue}
                     placeholder="search accounts and videos"
                     spellCheck={false}
-                    onChange={(e) => setSearchValue(e.target.value)}
+                    onChange={handleChange}
                     onFocus={() => setShowResult(true)}
                 />
                 {!!searchValue && !loading && (
-                    <button className={cx('clear')} onClick={handleClear} >
+                    <button className={cx('clear')} onClick={handleClear}>
                         <FontAwesomeIcon icon={faCircleXmark} />
                     </button>
                 )}
                 {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
-                <button className={cx('search-btn')}>
+                <button className={cx('search-btn')} onMouseDown={e => e.preventDefault()}>
                     <SearchIcon />
                 </button>
             </div>
