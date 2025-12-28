@@ -3,11 +3,13 @@ import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 import styles from './Search.module.scss';
 import HeadlessTippy from '@tippyjs/react/headless';
+
+import * as searchService from '~/apiService/searchService';
 import AccountItem from '~/components/AccountItem';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import { SearchIcon } from '~/components/Icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { data } from 'react-router-dom';
+import { useDebounce } from '~/hooks';
 
 const cx = classNames.bind(styles);
 
@@ -17,28 +19,31 @@ function Search() {
     const [showResult, setShowResult] = useState(true)
     const [loading, setLoading] = useState(false)
 
+    const debounced = useDebounce(searchValue, 700)
+
+
     const searchRef = useRef()
 
     useEffect(() => {
 
-        if(!searchValue.trim()) {
+        if(!debounced.trim()) {
             setSearchResult([])
             return ;
         }
 
-        setLoading(true)
+        
+        const fetchApi = async() => {
+            setLoading(true)
+            const result = await searchService.search(debounced);
+            setSearchResult(result)
 
-        fetch(`http://localhost:3001/users?q=${encodeURIComponent(searchValue)}&type=less`)
-            .then(res => res.json())
-            .then(res => {
-                // console.log(res.data)
-                setSearchResult(res.data)
-                setLoading(false)
-            })
-            .catch(() => {
-                setLoading(false)
-            })
-    }, [searchValue]);
+            setLoading(false)
+
+        }
+
+        fetchApi()
+        
+    }, [debounced]);
 
     const handleClear = () => {
         setSearchValue('')
