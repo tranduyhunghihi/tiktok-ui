@@ -1,4 +1,4 @@
-import { faL } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types'
 import styles from './Button.module.scss';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
@@ -58,6 +58,10 @@ function Button({
             {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
         </Comp>
     );
+}
+
+Button.propTypes = {
+    children: PropTypes.node.isRequired
 }
 
 export default Button;

@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import styles from './Search.module.scss';
 import HeadlessTippy from '@tippyjs/react/headless';
 
-import * as searchService from '~/apiService/searchService';
+import * as searchService  from '~/services/searchService';
 import AccountItem from '~/components/AccountItem';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import { SearchIcon } from '~/components/Icons';
