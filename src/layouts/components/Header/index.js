@@ -109,7 +109,6 @@ function Header() {
                     </Link>
                 </div>
                 
-                <Button>hehe</Button>
                 <Search />
 
                 <div className={cx('actions')}>
