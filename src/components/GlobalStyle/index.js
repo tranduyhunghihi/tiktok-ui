@@ -1,8 +1,1 @@
-import './GloBalStyle.scss'
-
-function GloBalStyle({children}) {
-    return children
-
-}
-
-export default GloBalStyle  
+export { default } from './GlobalStyle'
