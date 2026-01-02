@@ -1,0 +1,106 @@
+.wrapper{
+
+}
+
+.label{
+    font-size: 1.4rem;
+    padding: 12px 8px 0;
+    color: rgba(22, 24, 35, 0.75);
+    font-weight: 600;
+    &.separate{
+        border-top: 1px solid rgba(22, 24, 35, 0.12);
+    }
+}   
+.more-btn{
+    font-size: 1.4rem;
+    color: var(--primary);
+    cursor: pointer;
+    padding: 8px;
+    font-weight: 700;
+
+}
+
+.account-item{
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.avatar{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 12px;
+}
+
+.item-info{
+
+}
+
+.nickname{
+    font-size: 1.6rem;
+    color: var(--black);
+}
+
+.check{
+    margin-left: 4px;
+    font-size: 1.4rem;
+    color: #20d5ef;
+}
+
+.name{
+    font-size: 1.2rem;
+    color: rgba(22, 24, 35, 0.75);
+}
+
+.info-view{
+    width: 334px;
+}
+
+.preview-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+}
+
+.info-avata{
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.preview-body{  
+    display: flex;
+    padding: 0 16px 16px;
+    flex-direction: column;
+}       
+
+.info-nickname{
+
+}
+
+.preview-check{
+    font-size: 1.4rem;
+    color: #20d5ef;
+}
+
+.info-name{
+    font-size: 1.4rem;
+    margin-bottom: 4px;
+}
+
+.following-like{
+    display: flex;
+    
+}
+
+.following{
+    margin-right: 12px;
+}
+.count{
+    color: #999;
+}
