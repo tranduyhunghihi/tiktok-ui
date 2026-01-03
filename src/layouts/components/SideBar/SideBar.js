@@ -12,10 +12,24 @@ import {
 
 import Menu, { MenuItem } from './Menu';
 import SuggestedAccounts from '~/components/SuggestedAccounts';
+import { useEffect, useState } from 'react';
+import * as previewService from '~/services/previewService';
 
 const cx = classNames.bind(styles);
 
 function SideBar() {
+    const [infoPreview, setInfoPreview] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const preview = await previewService.preview();
+            setInfoPreview(preview.data);
+        };
+
+        fetchData();
+    }, []);
+
+
     return (
         <aside className={cx('wrapper')}>
             <Menu>
@@ -28,9 +42,8 @@ function SideBar() {
                 />
                 <MenuItem title="LIVE" to={config.routes.live} icon={<LiveIcon />} activeIcon={<LiveActiveIcon />} />
             </Menu>
-
-            <SuggestedAccounts label='Suggested accounts'/>
-            <SuggestedAccounts label='Following accounts'/>
+            <SuggestedAccounts label="Suggested accounts" data={infoPreview} showPreview={true} />
+            <SuggestedAccounts label="Following accounts" data={infoPreview} showPreview={false}/>
         </aside>
     );
 }

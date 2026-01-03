@@ -33,7 +33,6 @@ function Search() {
             setLoading(true);
             const result = await searchService.search(debouncedValue);
             setSearchResult(result);
-
             setLoading(false);
         };
 
