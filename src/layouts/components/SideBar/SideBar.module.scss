@@ -1,5 +1,7 @@
 .wrapper{
-    width: 356px;
-    min-height: 1000px;
+    width: 300px;
+    height: 100vh;
     padding: 20px 0 26px 8px;
+    position: fixed;
+    overflow-y: overlay;
 }

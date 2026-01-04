@@ -20,6 +20,7 @@ import Menu from '~/components/Popper/Menu';
 import { ActivityIcon, MessagesIcon, UploadIcon } from '~/components/Icons';
 import Image from '~/components/Image';
 import Search from '../Search';
+import ActionAuth from '../Auth/ActionAuth';
 
 const cx = classNames.bind(styles);
 
@@ -62,7 +63,7 @@ const MENU_ITEMS = [
 
 function Header() {
 
-    const currentUser = true;
+    const currentUser = false;
 
   
 
@@ -133,8 +134,8 @@ function Header() {
                         </>
                     ) : (
                         <>
-                            <Button text>Upload</Button>
-                            <Button primary>Log in</Button>
+                            <Button text to={config.routes.upload}>Upload</Button>
+                            <ActionAuth />
                         </>
                     )}
                     <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange} >

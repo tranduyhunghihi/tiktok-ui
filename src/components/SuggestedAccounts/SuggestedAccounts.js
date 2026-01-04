@@ -21,7 +21,7 @@ function SuggestedAccounts({ label, data=[], showPreview=false}) {
                 <AccountItem key={info.id} data={info} showPreview={showPreview} />
             ))}
 
-            {data.length > 3 && (
+            {showPreview && data.length > 3 && (
                 <p className={cx('more-btn')} onClick={() => setShowAll((pre) => !pre)}>
                     {showAll ? 'See less' : 'See all'}
                 </p>
@@ -32,7 +32,8 @@ function SuggestedAccounts({ label, data=[], showPreview=false}) {
 
 SuggestedAccounts.propTypes = {
     label: PropTypes.string.isRequired,
-    data: PropTypes.array.isRequired
+    data: PropTypes.array.isRequired,
+    showPreview: PropTypes.bool.isRequired
 };
 
 export default SuggestedAccounts;
