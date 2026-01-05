@@ -8,7 +8,7 @@ import { useEffect, useRef } from 'react';
 const cx = classNames.bind(styles);
 
 
-function Videos({ data }) {
+function Videos({ data, isFollow }) {
     const videoRefs = useRef([])
 
     useEffect(() => {
@@ -44,6 +44,7 @@ function Videos({ data }) {
                     ref={(el) => (videoRefs.current[index] = el)}
                     key={video.id}
                     data={video}
+                    isFollow={isFollow}
                 />
             ))}
         </div>

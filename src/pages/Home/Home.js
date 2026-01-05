@@ -16,7 +16,7 @@ function Home() {
 
     // console.log(videos)
 
-    return <Videos data={videos}/>;
+    return <Videos data={videos} isFollow={false}/>;
 }
 
 export default Home;
