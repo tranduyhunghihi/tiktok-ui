@@ -1,0 +1,44 @@
+.wrapper{
+    height: 100vh;
+    // overflow-y: scroll;
+
+}
+
+.video-container{
+    height: 90vh;
+    padding: 20px 40px;
+    overflow: hidden;
+    margin-top: 10px;
+    position: relative;
+}
+
+.video-item{
+    width: 80%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    cursor: pointer;    
+    &:hover ~.volume{
+        opacity: 1;
+    }
+
+}
+.volume{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 28px;
+    left: 48px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color:transparent;
+    color: var(--white);
+    cursor: pointer;
+    opacity: 0;
+    &:hover{
+        opacity: 1;
+        background-color: hsla(0, 0%, 100%, .13);;
+    }
+}

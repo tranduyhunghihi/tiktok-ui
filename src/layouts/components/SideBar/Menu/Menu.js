@@ -1,5 +1,3 @@
-import styles from './Menu.module.scss'
-
 import PropTypes from 'prop-types';
 
 function Menu({ children }) {
