@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 
 import styles from './Videos.module.scss';
-import { forwardRef, useState, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useState, useImperativeHandle, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis, faVolumeLow, faVolumeXmark } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -39,6 +39,27 @@ function VideoItem({ data, isFollow }, ref) {
         setMute(videoRef.current.muted);
     };
 
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.intersectionRatio >= 0.7) {
+                    video.play();
+                } else {
+                    video.pause();
+                }
+            },
+            {
+                threshold: 0.7,
+            },
+        );
+        observer.observe(video);
+
+        return () => observer.disconnect();
+    }, []);
+
     const handleToggleVideo = () => {
         if (play) {
             videoRef.current.pause();
@@ -70,13 +91,17 @@ function VideoItem({ data, isFollow }, ref) {
     };
 
     const handleFollow = () => {
-        setFollow(!follow)
-    }
+        setFollow(!follow);
+    };
 
     return (
         <div className={cx('video-container')}>
             <video
-                ref={videoRef}
+                ref={(el) => {
+                    videoRef.current = el;
+                    if (typeof ref === 'function') ref(el);
+                    else if (ref) ref.current = el;
+                }}
                 className={cx('video-item')}
                 src={data.video_url}
                 muted
@@ -91,16 +116,10 @@ function VideoItem({ data, isFollow }, ref) {
                 <FontAwesomeIcon icon={faEllipsis} />
             </div>
             <div className={cx('cretory-info')}>
-                <div className={cx('cretory-nickname')}>
-                    {data.user.nickname}
-                </div>
-                <div className={cx('cretory-date')}>
-                    {data.created_at}
-                </div>
+                <div className={cx('cretory-nickname')}>{data.user.nickname}</div>
+                <div className={cx('cretory-date')}>{data.created_at}</div>
             </div>
-            <div className={cx('cretory-description')}>
-                {data.description}
-            </div>
+            <div className={cx('cretory-description')}>{data.description}</div>
             <div className={cx('action')}>
                 <div className={cx('avatar-box')}>
                     <Image className={cx('avatar')} src={data.user.avatar} alt={data.user.nickname} />

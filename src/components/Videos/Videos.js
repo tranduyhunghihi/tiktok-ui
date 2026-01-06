@@ -8,45 +8,51 @@ import { useEffect, useRef } from 'react';
 const cx = classNames.bind(styles);
 
 
-function Videos({ data, isFollow }) {
-    const videoRefs = useRef([])
+function Videos({ data, isFollow, hasMore, onLoadMore }) {
+    const lastVideoRef = useRef()
+
+    
 
     useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    const video = entry.target;
-                    if(!video) return;
+        if(!lastVideoRef.current || !hasMore) return
 
-                    if(entry.intersectionRatio >= 0.7){
-                        video.play()
-                    }else{
-                        video.pause()
-                    }
-                })
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if(entry.isIntersecting){
+                      
+                    onLoadMore()
+                    observer.unobserve(entry.target);
+                }
             },
             {
-                threshold: 0.7,
+                threshold: 0.7
             }
         )
-        videoRefs.current.forEach((video) => {
-            if(video) observer.observe(video)
-        })
+
+        observer.observe(lastVideoRef.current)
 
         return () => observer.disconnect()
-    }, [data])
-
+    },[data, hasMore, onLoadMore])
 
     return (
         <div className={cx('wrapper')}>
-            {data.map((video, index) => (
-                <VideoItem
-                    ref={(el) => (videoRefs.current[index] = el)}
-                    key={video.id}
-                    data={video}
-                    isFollow={isFollow}
-                />
-            ))}
+            {data.map((video, index) => {
+                const isLast = index === data.length - 1 
+                // if (isLast) console.log('DAY LA VIDEO CUOI')
+
+                return (
+                    <VideoItem
+                        ref={
+                            // (el) => (videoRefs.current[index] = el)
+                            isLast ? lastVideoRef : null
+                        }
+                        key={`${video.id}-${index}`}
+                        data={video}
+                        isFollow={isFollow}
+                    />
+
+                )
+            })}
         </div>
     );
 }
