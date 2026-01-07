@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
-
+import PropTypes from 'prop-types';
 import styles from './Videos.module.scss';
-import { forwardRef, useState, useImperativeHandle, useRef, useEffect } from 'react';
+import { forwardRef, useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis, faVolumeLow, faVolumeXmark } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -15,10 +15,11 @@ import {
     ShareIcon,
 } from '../Icons';
 import Image from '~/components/Image';
+import Menu from './Menu';
 
 const cx = classNames.bind(styles);
 
-function VideoItem({ data, isFollow }, ref) {
+const VideoItem = forwardRef(({ data, isFollow }, ref) => {
     const [mute, setMute] = useState(true);
     const [play, setPlay] = useState(true);
     const [follow, setFollow] = useState(isFollow);
@@ -26,12 +27,10 @@ function VideoItem({ data, isFollow }, ref) {
     const [likeCount, setLikeCount] = useState(data.likes_count);
     const [favorite, setFavorite] = useState(false);
     const [favoriteCount, setFavoritesCount] = useState(data.favorites_count);
+    const [isOpen, setIsOpen] = useState(false)
 
     const videoRef = useRef();
 
-    useImperativeHandle(ref, () => {
-        return videoRef.current;
-    });
     const handleToggleSound = () => {
         if (!videoRef.current) return;
 
@@ -109,12 +108,22 @@ function VideoItem({ data, isFollow }, ref) {
                 playsInline
                 onClick={handleToggleVideo}
             />
-            <div className={cx('volume')} onClick={handleToggleSound}>
+            <div className={cx('volume',{
+                active: mute
+            })} onClick={handleToggleSound} >
                 {mute ? <FontAwesomeIcon icon={faVolumeXmark} /> : <FontAwesomeIcon icon={faVolumeLow} />}
             </div>
-            <div className={cx('menu')}>
-                <FontAwesomeIcon icon={faEllipsis} />
-            </div>
+            
+                <Menu>
+                    <div className={cx('menu',{
+                        active: isOpen
+                    })}
+                    onClick={() => setIsOpen(!isOpen)}
+                    >
+                        <FontAwesomeIcon icon={faEllipsis} />
+                    </div>
+                </Menu>
+            
             <div className={cx('cretory-info')}>
                 <div className={cx('cretory-nickname')}>{data.user.nickname}</div>
                 <div className={cx('cretory-date')}>{data.created_at}</div>
@@ -156,6 +165,24 @@ function VideoItem({ data, isFollow }, ref) {
             </div>
         </div>
     );
+})
+
+VideoItem.propTypes = {
+    data: PropTypes.shape({
+        video_url: PropTypes.string.isRequired,
+        likes_count: PropTypes.number,
+        favorites_count: PropTypes.number,
+        comments_count: PropTypes.number,
+        shares_count: PropTypes.number,
+        description: PropTypes.string,
+        created_at: PropTypes.string,
+        user: PropTypes.shape({
+            nickname: PropTypes.string,
+            avatar: PropTypes.string
+        })
+
+    }).isRequired,
+    isFollow: PropTypes.bool.isRequired
 }
 
-export default forwardRef(VideoItem);
+export default VideoItem;

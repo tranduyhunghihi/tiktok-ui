@@ -4,16 +4,39 @@ import * as videoService from "~/services/videoService";
 
 function Following() {
     const [videos, setVideos] = useState([])
+    const [page, setPage] = useState(1)
+    const [isLoading, setIsLoading] = useState(false)
+    const [hasMore, setHasMore] = useState(true)
 
     useEffect (() => {
         const fetchData = async() => {
-            const res = await videoService.getVideos()
-            setVideos(res)
+            setIsLoading(true)
+            const res = await videoService.getVideos(page)  
+
+            const newVideos = res.data
+            const totalPages = res.meta.pagination.total_pages
+           
+            setVideos(pre => [...pre, ...newVideos])
+            
+            if(page >= totalPages) {
+                setHasMore(false)
+            }
+            setIsLoading(false)
         }
         fetchData()
-    },[])
+    },[page])
 
-    return <Videos data={videos} isFollow={true}/>;
+
+    const handleLoad = () => {
+        if(isLoading || !hasMore) return 
+        setIsLoading(true)
+        setPage(pre => pre + 1)
+    }
+
+
+    // console.log('page', page)
+
+    return <Videos data={videos} isFollow={true} onLoadMore={handleLoad} hasMore={hasMore}/>;
 }
 
 export default Following;

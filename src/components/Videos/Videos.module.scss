@@ -42,6 +42,9 @@
         opacity: 1;
         background-color: hsla(0, 0%, 100%, 0.13);
     }
+    &.active {
+        opacity: 1;
+    }
 }
 .volume {
     top: 28px;
@@ -51,12 +54,14 @@
 .menu {
     top: 28px;
     right: 180px;
+    
 }
 .cretory-info {
     position: absolute;
     bottom: 80px;
     left: 54px;
     display: flex;
+    user-select: none;
 }
 
 .cretory-nickname {

@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-
+import PropTypes from 'prop-types';
 import styles from './Videos.module.scss';
 import VideoItem from './VideoItem';
 import { useEffect, useRef } from 'react';
@@ -55,6 +55,13 @@ function Videos({ data, isFollow, hasMore, onLoadMore }) {
             })}
         </div>
     );
+}
+
+Videos.propTypes = {    
+    data: PropTypes.array.isRequired,
+    isFollow: PropTypes.bool.isRequired,
+    hasMore: PropTypes.bool.isRequired,
+    onLoadMore: PropTypes.func.isRequired
 }
 
 export default Videos;
