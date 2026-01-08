@@ -67,7 +67,6 @@ function Menu({ children }) {
         <Tippy
             appendTo={() => document.body}
             interactive
-            // offset={[10, 10]}
             placement="bottom-end"
             render={renderResult}
             trigger="click"

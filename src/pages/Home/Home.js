@@ -37,7 +37,7 @@ function Home() {
 
     // console.log('page', page)
 
-    return <Videos data={videos} isFollow={false} onLoadMore={handleLoad} hasMore={hasMore}/>;
+    return <Videos  data={videos} isFollow={false} onLoadMore={handleLoad} hasMore={hasMore}/>;
 }
 
 export default Home;

@@ -1,14 +1,22 @@
 .wrapper {
-    height: 100vh;
-    // overflow-y: scroll;
+    height: 90vh;
+    overflow-y: scroll;
+
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+
+    /* optional */
+    overscroll-behavior: contain;
 }
 
 .video-container {
     height: 90vh;
-    padding: 10px 40px;
+    padding: 20px 40px;
     overflow: hidden;
-    margin-top: 10px;
     position: relative;
+
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
 }
 
 .video-item {

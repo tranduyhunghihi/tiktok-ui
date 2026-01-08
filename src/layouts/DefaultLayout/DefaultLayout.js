@@ -3,13 +3,15 @@ import classNames from 'classnames/bind';
 import Header from '../components/Header';
 import styles from './DefaultLayout.module.scss';
 import SideBar from '~/layouts/components/SideBar';
-import Button from '~/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
 function DefaultLayout({ children }) {
+
+    
+
     return (
         <div className={cx('wrapper')}>
             <Header />

@@ -1,4 +1,5 @@
 .wrapper{
+    height: 100vh;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -6,15 +7,21 @@
 .container{
     width: var(--default-layout-width);
     max-width: 100%;
+    height: calc(100vh - var(--default-layout-header-height));
     display: flex;
     padding: 0 var( --default-layout-horizontal-spacer);
     margin-top: var(--default-layout-header-height);
+    overflow: hidden;
    
 }
 .content{
     flex: 1;
     margin-left: 356px;
     position: relative;
+    height: 110%;
+    overflow-y: auto;
+
+    scroll-snap-type: y mandatory;
 }
 .btn-direction{
     display: flex;

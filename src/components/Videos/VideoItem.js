@@ -19,7 +19,7 @@ import Menu from './Menu';
 
 const cx = classNames.bind(styles);
 
-const VideoItem = forwardRef(({ data, isFollow }, ref) => {
+const VideoItem = forwardRef(({ data, isFollow, isMenuOpen, onOpenMenu, onCloseMenu }, ref) => {
     const [mute, setMute] = useState(true);
     const [play, setPlay] = useState(true);
     const [follow, setFollow] = useState(isFollow);
@@ -27,7 +27,7 @@ const VideoItem = forwardRef(({ data, isFollow }, ref) => {
     const [likeCount, setLikeCount] = useState(data.likes_count);
     const [favorite, setFavorite] = useState(false);
     const [favoriteCount, setFavoritesCount] = useState(data.favorites_count);
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpenMenu, setIsOpenMenu] = useState(false)
 
     const videoRef = useRef();
 
@@ -58,6 +58,8 @@ const VideoItem = forwardRef(({ data, isFollow }, ref) => {
 
         return () => observer.disconnect();
     }, []);
+
+    
 
     const handleToggleVideo = () => {
         if (play) {
@@ -93,8 +95,12 @@ const VideoItem = forwardRef(({ data, isFollow }, ref) => {
         setFollow(!follow);
     };
 
+    const handleOpenMenu = () => {
+        setIsOpenMenu(!isOpenMenu)
+    }
+
     return (
-        <div className={cx('video-container')}>
+        <div className={cx('video-container')} >
             <video
                 ref={(el) => {
                     videoRef.current = el;
@@ -114,11 +120,17 @@ const VideoItem = forwardRef(({ data, isFollow }, ref) => {
                 {mute ? <FontAwesomeIcon icon={faVolumeXmark} /> : <FontAwesomeIcon icon={faVolumeLow} />}
             </div>
             
-                <Menu>
+                <Menu
+                    onClick={onOpenMenu}
+                >
                     <div className={cx('menu',{
-                        active: isOpen
+                        active: isOpenMenu
                     })}
-                    onClick={() => setIsOpen(!isOpen)}
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        onOpenMenu()
+                        handleOpenMenu()
+                    }}
                     >
                         <FontAwesomeIcon icon={faEllipsis} />
                     </div>
