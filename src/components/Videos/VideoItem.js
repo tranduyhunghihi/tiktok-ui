@@ -19,8 +19,7 @@ import Menu from './Menu';
 
 const cx = classNames.bind(styles);
 
-const VideoItem = forwardRef(({ data, isFollow, isMenuOpen, onOpenMenu, onCloseMenu }, ref) => {
-    const [mute, setMute] = useState(true);
+const VideoItem = forwardRef(({ data, isFollow, isMuted, onToggleMuted }, ref) => {
     const [play, setPlay] = useState(true);
     const [follow, setFollow] = useState(isFollow);
     const [like, setLike] = useState(false);
@@ -28,15 +27,21 @@ const VideoItem = forwardRef(({ data, isFollow, isMenuOpen, onOpenMenu, onCloseM
     const [favorite, setFavorite] = useState(false);
     const [favoriteCount, setFavoritesCount] = useState(data.favorites_count);
     const [isOpenMenu, setIsOpenMenu] = useState(false)
+    
 
     const videoRef = useRef();
 
+    //handle Muted
     const handleToggleSound = () => {
-        if (!videoRef.current) return;
-
-        videoRef.current.muted = !videoRef.current.muted;
-        setMute(videoRef.current.muted);
+        onToggleMuted()
     };
+
+    useEffect(() => {
+        if(!videoRef.current) return
+        videoRef.current.muted = isMuted
+    },[isMuted])
+
+    //handle Scroll Auto Play video
 
     useEffect(() => {
         const video = videoRef.current;
@@ -59,7 +64,7 @@ const VideoItem = forwardRef(({ data, isFollow, isMenuOpen, onOpenMenu, onCloseM
         return () => observer.disconnect();
     }, []);
 
-    
+    //handle Action Video
 
     const handleToggleVideo = () => {
         if (play) {
@@ -95,9 +100,19 @@ const VideoItem = forwardRef(({ data, isFollow, isMenuOpen, onOpenMenu, onCloseM
         setFollow(!follow);
     };
 
+    //handle open/close Menu
     const handleOpenMenu = () => {
         setIsOpenMenu(!isOpenMenu)
     }
+
+    useEffect(() => {   
+        const handleScroll = () =>  setIsOpenMenu(false)
+
+        window.addEventListener('scroll', handleScroll, true)
+
+        return () =>  window.removeEventListener('scroll', handleScroll, true)
+
+    },[])
 
     return (
         <div className={cx('video-container')} >
@@ -115,22 +130,16 @@ const VideoItem = forwardRef(({ data, isFollow, isMenuOpen, onOpenMenu, onCloseM
                 onClick={handleToggleVideo}
             />
             <div className={cx('volume',{
-                active: mute
+                active: isMuted
             })} onClick={handleToggleSound} >
-                {mute ? <FontAwesomeIcon icon={faVolumeXmark} /> : <FontAwesomeIcon icon={faVolumeLow} />}
+                {isMuted ? <FontAwesomeIcon icon={faVolumeXmark} /> : <FontAwesomeIcon icon={faVolumeLow} />}
             </div>
             
-                <Menu
-                    onClick={onOpenMenu}
-                >
+                <Menu visible={isOpenMenu} onClose={() => setIsOpenMenu(false)}>
                     <div className={cx('menu',{
                         active: isOpenMenu
                     })}
-                    onClick={(e) => {
-                        e.stopPropagation()
-                        onOpenMenu()
-                        handleOpenMenu()
-                    }}
+                    onClick={handleOpenMenu}
                     >
                         <FontAwesomeIcon icon={faEllipsis} />
                     </div>

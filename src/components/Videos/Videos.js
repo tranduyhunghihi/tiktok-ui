@@ -10,11 +10,9 @@ const cx = classNames.bind(styles);
 
 function Videos({ data, isFollow, hasMore, onLoadMore }) {
     
-    const[openMenuId, setOpenMenuID] = useState(null)
+    const[isMuted, setIsMuted] = useState(true)
 
     const lastVideoRef = useRef()
-
-    const scrollRef = useRef(null)
     
 
     useEffect(() => {
@@ -38,24 +36,6 @@ function Videos({ data, isFollow, hasMore, onLoadMore }) {
         return () => observer.disconnect()
     },[data, hasMore, onLoadMore])
 
-    useEffect (() => {
-
-        const contentElement = scrollRef.current
-        if(!contentElement) return
-
-        const closeMenu = () => setOpenMenuID(null)
-
-        contentElement.addEventListener('scroll', closeMenu, {passive: true})
-        contentElement.addEventListener('click', closeMenu)
-
-
-        return () => {
-        contentElement.removeEventListener('scroll', closeMenu)
-        contentElement.removeEventListener('click', closeMenu)
-
-        }
-
-    },[])
 
     return (
         <div className={cx('wrapper')}>
@@ -72,9 +52,8 @@ function Videos({ data, isFollow, hasMore, onLoadMore }) {
                         key={`${video.id}-${index}`}
                         data={video}
                         isFollow={isFollow}
-                        isMenuOpen={openMenuId === video.id}
-                        onOpenMenu={() => setOpenMenuID(video.id)}
-                        onCloseMenu={() => setOpenMenuID(null)}
+                        isMuted={isMuted}
+                        onToggleMuted={() => setIsMuted(pre => !pre)}
                        
                     />
 

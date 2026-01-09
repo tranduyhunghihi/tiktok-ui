@@ -1,5 +1,5 @@
 import Tippy from '@tippyjs/react/headless';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Menu.module.scss';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
@@ -15,8 +15,10 @@ import {
 
 const cx = classNames.bind(styles);
 
-function Menu({ children }) {
+function Menu({ children, visible, onClose }) {
     const [enabled, setEnabled] = useState(false);
+
+    
 
 
 
@@ -69,7 +71,8 @@ function Menu({ children }) {
             interactive
             placement="bottom-end"
             render={renderResult}
-            trigger="click"
+            visible={visible}
+            onClickOutside={onClose}
         >
             {children}
         </Tippy>
