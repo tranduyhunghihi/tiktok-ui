@@ -6,11 +6,12 @@ import SideBar from '~/layouts/components/SideBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
+
 const cx = classNames.bind(styles);
 
 function DefaultLayout({ children }) {
 
-    
+   
 
     return (
         <div className={cx('wrapper')}>

@@ -16,6 +16,7 @@ import {
 } from '../Icons';
 import Image from '~/components/Image';
 import Menu from './Menu';
+import Share from '../Share';
 
 const cx = classNames.bind(styles);
 
@@ -27,6 +28,7 @@ const VideoItem = forwardRef(({ data, isFollow, isMuted, onToggleMuted }, ref) =
     const [favorite, setFavorite] = useState(false);
     const [favoriteCount, setFavoritesCount] = useState(data.favorites_count);
     const [isOpenMenu, setIsOpenMenu] = useState(false)
+    const [isOpenShare, setIsOpenShare] = useState(false)
     
 
     const videoRef = useRef();
@@ -114,6 +116,12 @@ const VideoItem = forwardRef(({ data, isFollow, isMuted, onToggleMuted }, ref) =
 
     },[])
 
+    //handle open/close Share
+    const handleOpenShare = () => {
+        setIsOpenShare(!isOpenShare)
+    }
+
+
     return (
         <div className={cx('video-container')} >
             <video
@@ -177,7 +185,8 @@ const VideoItem = forwardRef(({ data, isFollow, isMuted, onToggleMuted }, ref) =
                     <div className={cx('favorite')}>{!favorite ? <FavoritesIcon /> : <FavoritesActiveIcon />}</div>
                     <strong className={cx('favorites-count')}>{favoriteCount}</strong>
                 </div>
-                <div className={cx('container')}>
+                <div className={cx('container')} onClick={handleOpenShare}>
+                    {isOpenShare && <Share /> }
                     <div className={cx('share')}>
                         <ShareIcon />
                     </div>

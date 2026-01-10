@@ -18,8 +18,8 @@
     flex: 1;
     margin-left: 356px;
     position: relative;
-    height: 110%;
-    overflow-y: auto;
+    height: 90vh;
+    overflow-y: scroll;
 
     scroll-snap-type: y mandatory;
 }
