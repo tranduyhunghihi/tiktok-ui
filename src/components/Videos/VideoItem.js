@@ -121,6 +121,10 @@ const VideoItem = forwardRef(({ data, isFollow, isMuted, onToggleMuted }, ref) =
         setIsOpenShare(!isOpenShare)
     }
 
+    const handleCloseShare = () => {
+        setIsOpenShare(false)
+    }
+
 
     return (
         <div className={cx('video-container')} >
@@ -186,12 +190,12 @@ const VideoItem = forwardRef(({ data, isFollow, isMuted, onToggleMuted }, ref) =
                     <strong className={cx('favorites-count')}>{favoriteCount}</strong>
                 </div>
                 <div className={cx('container')} onClick={handleOpenShare}>
-                    {isOpenShare && <Share /> }
                     <div className={cx('share')}>
                         <ShareIcon />
                     </div>
                     <strong className={cx('shares-count')}>{data.shares_count}</strong>
                 </div>
+                    {isOpenShare && <Share onClose={handleCloseShare}  /> }
             </div>
         </div>
     );

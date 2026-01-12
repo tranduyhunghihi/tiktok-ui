@@ -17,6 +17,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight, faXmark } from '@fortawesome/free-solid-svg-icons';
 import Image from '../Image';
 import { RepostIcon } from '../Icons';
+import { useRef, useState, useEffect } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -67,7 +68,98 @@ const APPS_SHARE = [
     },
 ];
 
-function Share() {
+function Share({onClose}) {
+    const [showAccountLeft, setShowAccountLeft] = useState(false);
+    const [showAccountRight, setShowAccountRight] = useState(false);
+    const [showAppLeft, setShowAppLeft] = useState(false);
+    const [showAppRight, setShowAppRight] = useState(false);
+
+    const accountsRef = useRef();
+    const appsRef = useRef();
+
+    const checkAccountScroll = () => {
+        const el = accountsRef.current;
+        if (!el) return;
+
+        const { scrollLeft, clientWidth, scrollWidth } = el;
+
+        if (scrollLeft > 0) {
+            setShowAccountLeft(true);
+        } else {
+            setShowAccountLeft(false);
+        }
+
+        if (scrollLeft + clientWidth < scrollWidth) {
+            setShowAccountRight(true);
+        } else {
+            setShowAccountRight(false);
+        }
+    };
+
+    const checkAppScroll = () => {
+        const el = appsRef.current;
+        if (!el) return;
+
+        const { scrollLeft, clientWidth, scrollWidth } = el;
+
+        if (scrollLeft > 0) {
+            setShowAppLeft(true);
+        } else {
+            setShowAppLeft(false);
+        }
+
+        if (scrollLeft + clientWidth < scrollWidth) {
+            setShowAppRight(true);
+        } else {
+            setShowAppRight(false);
+        }
+    };
+
+    useEffect(() => {
+        checkAccountScroll();
+        checkAppScroll();
+    }, []);
+
+    const handleScrollAccountRight = () => {
+        accountsRef.current.scrollBy({
+            left: 300,
+            behavior: 'smooth',
+        });
+        setTimeout(() => {
+            checkAccountScroll();
+        }, 300);
+    };
+
+    const handleScrollAccountLeft = () => {
+        accountsRef.current.scrollBy({
+            left: -300,
+            behavior: 'smooth',
+        });
+        setTimeout(() => {
+            checkAccountScroll();
+        }, 300);
+    };
+
+    const handleScrollAppRight = () => {
+        appsRef.current.scrollBy({
+            left: 300,
+            behavior: 'smooth',
+        });
+        setTimeout(() => {
+            checkAppScroll();
+        }, 300);
+    };
+
+    const handleScrollAppLeft = () => {
+        appsRef.current.scrollBy({
+            left: -300,
+            behavior: 'smooth',
+        });
+        setTimeout(() => {
+            checkAppScroll();
+        }, 300);
+    };
+
     return (
         <div className={cx('layout')}>
             <div className={cx('wrapper')}>
@@ -76,11 +168,11 @@ function Share() {
                         <SearchIcon />
                     </div>
                     <div className={cx('share-title')}>Share to</div>
-                    <div className={cx('btn-action')}>
+                    <div onClick={onClose} className={cx('btn-action')}>
                         <FontAwesomeIcon icon={faXmark} />
                     </div>
                 </div>
-                <div className={cx('share-account')}>
+                <div ref={accountsRef} className={cx('share-account')}>
                     <div className={cx('share-item')}>
                         <Image
                             className={cx('share_avatar')}
@@ -169,36 +261,43 @@ function Share() {
                         />
                         <p className={cx('share-name')}>Hung dep trai</p>
                     </div>
-                    <div className={cx('share-arrow')}>
-                        <div className={cx('arrow-left')}>
+                </div>  
+                
+                    {showAccountLeft && (
+                        <div onClick={handleScrollAccountLeft} className={cx('arrow-left-account')}>
                             <FontAwesomeIcon icon={faAngleLeft} />
                         </div>
-                        <div className={cx('arrow-right')}>
+                    )}
+                    {showAccountRight && (
+                        <div onClick={handleScrollAccountRight} className={cx('arrow-right-account')}>
                             <FontAwesomeIcon icon={faAngleRight} />
                         </div>
-                    </div>
-                </div>
+                    )}
+                
 
                 <div className={cx('separate')}></div>
 
-                <div className={cx('share-account')}>
+                <div ref={appsRef} className={cx('share-app')}>
                     {APPS_SHARE.map((app, index) => (
                         <div key={index} className={cx('share-item')}>
                             <div className={cx('share_avatar')}>{app.icon}</div>
                             <p className={cx('share-name')}>{app.title}</p>
                         </div>
                     ))}
-                    <div className={cx('share-arrow')}>
-                        <div className={cx('arrow-left')}>
+                </div>
+                    {showAppLeft && (
+                        <div onClick={handleScrollAppLeft} className={cx('arrow-left-app')}>
                             <FontAwesomeIcon icon={faAngleLeft} />
                         </div>
-                        <div className={cx('arrow-right')}>
+                    )}
+                    {showAppRight && (
+                        <div onClick={handleScrollAppRight} className={cx('arrow-right-app')}>
                             <FontAwesomeIcon icon={faAngleRight} />
                         </div>
-                    </div>
+                    )}
                 </div>
             </div>
-        </div>
+        
     );
 }
 

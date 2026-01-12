@@ -1,11 +1,11 @@
-.layout{
+.layout {
     background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     inset: 0px;
     z-index: 5;
     cursor: auto;
 }
-.wrapper{
+.wrapper {
     width: 480px;
     height: 333px;
     background-color: var(--white);
@@ -14,9 +14,9 @@
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 12px;
-    padding-left: 8px;
+    padding: 0 8px;
 }
-.share-header{
+.share-header {
     width: 100%;
     height: 52px;
     padding: 0 8px;
@@ -24,7 +24,7 @@
     justify-content: space-between;
     align-items: center;
 }
-.btn-action{
+.btn-action {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -34,78 +34,120 @@
     cursor: pointer;
 }
 
-.share-title{
+.share-title {
     font-size: 1.7rem;
     font-weight: 600;
 }
 
-.share-account{
+.share-account,
+.share-app {
     width: 100%;
     height: 128px;
     display: flex;
-    overflow: hidden;
+    flex-wrap: nowrap;
+    overflow: scroll;
     margin: 8px 0;
     position: relative;
-    &:hover .share-arrow{
-        display: inline-flex;
-    }
-
 }
-.separate{
+.share-account:hover ~ .arrow-left-account,
+.share-account:hover ~ .arrow-right-account,
+.share-app:hover ~ .arrow-left-app,
+.share-app:hover ~ .arrow-right-app,
+.arrow-left-account:hover,
+.arrow-right-account:hover,
+.arrow-left-app:hover,
+.arrow-right-app:hover,
+.arrow-left-account:hover ~ .arrow-right-account,
+.arrow-right-account:hover ~ .arrow-left-account,
+.arrow-left-app:hover ~ .arrow-right-app,
+.arrow-right-app:hover ~ .arrow-left-app {
+    opacity: 1;
+}
+
+.share-app::-webkit-scrollbar {
+    display: none;
+}
+
+.share-account::-webkit-scrollbar {
+    display: none;
+}
+
+.separate {
     height: 1px;
     transform: scaleY(0.5);
     width: 100%;
-    background-color: rgba(0, 0, 0, .12);
+    background-color: rgba(0, 0, 0, 0.12);
 }
 
-.share-item{
+.share-item {
+    flex-shrink: 0;
     width: 88px;
-    height: 124px;
+    height: 116px;
     padding: 12px 12px 8px;
     border-radius: 8px;
     cursor: pointer;
-    &:hover{
+    &:hover {
         background-color: #f2f2f2;
     }
 }
 
-.share_avatar{
+.share_avatar {
     width: 64px;
     height: 64px;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.share-name{
+.share-name {
     width: 100%;
     font-size: 1.2rem;
     text-align: center;
-
 }
 
-.share-arrow{
+.share-arrow {
+    top: 31%;
+}
+.share-arrow-app {
+    top: 75%;
+}
+
+.arrow-right-app,
+.arrow-left-app,
+.arrow-right-account,
+.arrow-left-account {
     position: absolute;
-    width: 450px;
-    height: 40px;
-    margin: 0 10px;
-    top: 35%;
-    transform: translateY(-50%);
-    display: flex;
-    justify-content: space-between;
-    pointer-events: none;
-    display: none;
-}
-.arrow-left,
-.arrow-right{    
     width: 40px;
     height: 40px;
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.9);
-    box-shadow: 0px 2px 12px 0px rgba(0,0,0,.12);
+    box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.12);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     pointer-events: auto;
+    opacity: 0;
 }
 
+.arrow-left-account,
+.arrow-right-account{
+    top: 82px;
+} 
+.arrow-left-account {
+    left: 15px;
+}
+.arrow-right-account {
+    right: 15px;
+}
+
+.arrow-left-app,
+.arrow-right-app{
+    bottom: 64px;
+}
+
+.arrow-left-app {
+    left: 15px;
+}
+.arrow-right-app {
+    right: 15px;
+}
